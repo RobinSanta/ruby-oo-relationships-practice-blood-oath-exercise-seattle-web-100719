@@ -35,8 +35,8 @@ class Follower
 	end
 
 	def self.top_ten
-		arr = BloodOath.all.map {|blood_oath| blood_oath.follower}
-		freq = arr.inject(Hash.new(0)) { |key, value| key[value] += 1; key }
+		arr = BloodOath.all.map {|blood_oath| blood_oath.follower.name}
+		arr.inject(Hash.new(0)) { |key, value| key[value] += 1; key }
 	end
 
 end
