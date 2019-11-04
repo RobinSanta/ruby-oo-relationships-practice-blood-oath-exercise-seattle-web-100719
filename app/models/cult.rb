@@ -13,9 +13,22 @@ class Cult
 	def recruit_follower(follower)
 		BloodOath.new(self, follower)
 	end
+	
+	def cult_count
+		BloodOath.all.select {|blood_oath| blood_oath.cult == self}
+	end
 
 	def cult_population
 		BloodOath.all.select {|blood_oath| blood_oath.cult == self}.length
+	end
+
+	def average_age
+		sum = BloodOath.all.select {|blood_oath| blood_oath.cult == self}.map {|blood_oath| blood_oath.follower.age}.sum.to_f
+		sum / BloodOath.all.select {|blood_oath| blood_oath.cult == self}.length
+	end
+
+	def my_followers_mottos
+		BloodOath.all.select {|blood_oath| blood_oath.cult == self}.map {|blood_oath| blood_oath.follower.life_motto}
 	end
 
 	def self.all
@@ -32,6 +45,24 @@ class Cult
 
 	def self.find_by_founding_year(year)
 		@@all.select {|cult| cult.founding_year == year}
+	end
+
+	def self.least_popular
+		min = 100000000000
+		min_pop = []
+		@@all.each do |cult|
+			if cult.cult_population <= min
+				min_pop << cult
+				min = cult.cult_population
+			end
+		end
+		min_pop
+	end
+
+	def self.most_common_location
+		arr = @@all.map {|cult| cult.location}
+		freq = arr.inject(Hash.new(0)) { |key, value| key[value] += 1; key }
+		arr.max_by {|value| freq[value]}
 	end
 
 end

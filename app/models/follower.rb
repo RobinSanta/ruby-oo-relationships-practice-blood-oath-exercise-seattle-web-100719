@@ -16,12 +16,27 @@ class Follower
 		@cults << cult
 	end
 
+	def my_cults_slogans
+		BloodOath.all.map {|blood_oath| blood_oath.cult.slogan}
+	end
+
 	def self.all
 		@@all
 	end
 
 	def self.of_a_certian_age(num)
 		@@all.select {|follower| follower.age >= num}
+	end
+
+	def self.most_active
+		arr = BloodOath.all.map {|blood_oath| blood_oath.follower}
+		freq = arr.inject(Hash.new(0)) { |key, value| key[value] += 1; key }
+		arr.max_by {|value| freq[value]}
+	end
+
+	def self.top_ten
+		arr = BloodOath.all.map {|blood_oath| blood_oath.follower}
+		freq = arr.inject(Hash.new(0)) { |key, value| key[value] += 1; key }
 	end
 
 end

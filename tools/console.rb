@@ -22,6 +22,11 @@ blood_oath_2 = BloodOath.new(cult_2, follower_1)
 blood_oath_3 = BloodOath.new(cult_2, follower_2)
 blood_oath_4 = BloodOath.new(cult_3, follower_3)
 
+follower_1.join_cult(cult_1)
+follower_1.join_cult(cult_2)
+follower_2.join_cult(cult_2)
+follower_3.join_cult(cult_3)
+
 binding.pry
 
 puts "Mwahahaha!" # just in case pry is buggy and exits
