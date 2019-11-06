@@ -13,15 +13,11 @@ class Cult
 	end
 
 	def recruit_follower(follower)
-		if follower.age < self.minimum_age
-			return "You are too young to join this cult."
+		if self.minimum_age && follower.age < self.minimum_age
+			return "This person is too young to join our cult."
 		else
 			BloodOath.new(self, follower)
 		end
-	end
-	
-	def cult_count
-		BloodOath.all.select {|blood_oath| blood_oath.cult == self}
 	end
 
 	def cult_population
